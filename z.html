@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Azazazaaa</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	</head>
+	<body>
+		<ol id="list"></ol>
+
+	</body>
+	<script type='text/javascript'>
+		
+		window.onload = function(){
+
+			var peoples = [];
+			
+			var human1 = {
+				firstName : "Dmitry",
+				lastName : "Ber",
+				age : 20
+			};
+			
+			var human2 = {
+				firstName : "Oleg",
+				lastName : "Dubrovin",
+				age: 25
+			}
+			
+			peoples.push(human1);
+			peoples.push(human2);
+			
+
+			peoples.forEach(function(item, i, arr) {
+  			var human = item.firstName + " " + item.lastName + ". " + item.age + " year is old";
+  			addChild(human);
+  			
+			}); 
+
+			/*
+			Dmitry Ber. 20 year is old
+			Oleg Dubrovin. 25 year is old
+			*/
+
+		}
+
+		function addChild(param1){
+			var newList = document.createElement('li');
+  			newList.innerHTML = param1;
+  			list.appendChild(newList);
+		}
+	</script>
+</html>
