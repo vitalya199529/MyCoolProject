@@ -6,62 +6,62 @@
 	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
 	<style type="text/css">
 
-			li { 
-    			padding: 0;
-   	 			list-style-type: none;
-    			background: #f2f2f2;
-			}
-			
-			li:nth-of-type(even) {
-    			background: white;
-			}
-			.tab {display:none;}
-	</style>
+   li { 
+     padding: 0;
+     list-style-type: none;
+     background: #f2f2f2;
+   }
+   
+   li:nth-of-type(even) {
+     background: white;
+   }
+   .tab {display:none;}
+ </style>
 </head>
 <body>
 
-<nav class="w3-sidenav w3-light-grey w3-card-2" style="width:130px">
-  <div class="w3-container">
-    <h5>Menu</h5>
-  </div>
-  <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'Запрос')">Запрос</a>
-  <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'Ответ')">Ответ</a>
-  <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'История')">История</a>
-</nav>
+  <nav class="w3-sidenav w3-light-grey w3-card-2" style="width:130px">
+    <div class="w3-container">
+      <h5>Menu</h5>
+    </div>
+    <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'Запрос')">Запрос</a>
+    <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'Ответ')">Ответ</a>
+    <a href="javascript:void(0)" class="tablink" onclick="openTabs(event, 'История')">История</a>
+  </nav>
 
-<div style="margin-left:130px">
+  <div style="margin-left:130px">
 
-  <div id="Запрос" class="w3-container tab">
-    <h2>Запрос</h2>
-    <p>Запрос.</p>
-  </div>
+    <div id="Запрос" class="w3-container tab">
+      <h2>Запрос</h2>
+      <p>Запрос.</p>
+    </div>
 
-  <div id="Ответ" class="w3-container tab">
-    <h2>Ответ</h2>
-    <p>Ответ.</p> 
-  </div>
+    <div id="Ответ" class="w3-container tab">
+      <h2>Ответ</h2>
+      <p>Ответ.</p> 
+    </div>
 
-  <div id="История" class="w3-container tab">
-    <h2>История</h2>
-    <ol>
-	    <li>Запрос 1</li>
-	    <li>Запрос 2</li>
-	    <li>Запрос 3</li>
- 	</ol>
-  </div>
+    <div id="История" class="w3-container tab">
+      <h2>История</h2>
+      <ol>
+       <li>Запрос 1</li>
+       <li>Запрос 2</li>
+       <li>Запрос 3</li>
+     </ol>
+   </div>
 
-</div>
+ </div>
 
-<script>
-function openTabs(evt, tabName) {
-  var i, x, tablinks;
-  x = document.getElementsByClassName("tab");
-  for (i = 0; i < x.length; i++) {
+ <script>
+  function openTabs(evt, tabName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
      x[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < x.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" w3-red", ""); 
+   }
+   tablinks = document.getElementsByClassName("tablink");
+   for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-red", ""); 
   }
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " w3-red";

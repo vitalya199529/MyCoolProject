@@ -1,52 +1,171 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Azazazaaa</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	</head>
-	<body>
-		<ol id="list"></ol>
+<head>
+	<title>Azazazaaa</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="sorttable.js"></script>
+</head>
+<style type="text/css">
 
-	</body>
-	<script type='text/javascript'>
+* {
+  box-sizing: border-box;
+}
+
+#Input {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+</style>
+<body>
+	<input type="text" id="Input" onkeyup="findByName()" placeholder="Поиск по фамилии..." title="Type in a name">
+
+	<div class="container">
+		<table border="1" id="list" class="sortable table table-striped table-bordered">
+			<thead>
+				<tr>
+					<th><a href="javascript:SortTable(2,'T');">Фамилия</a></th>
+					<th><a href="javascript:SortTable(0,'T');">Имя</a></th>
+					<th><a href="javascript:SortTable(1,'T');">Отчество</a></th>
+					<th><a href="javascript:SortTable(3,'T');">Пол</a></th>
+					<th><a href="javascript:SortTable(4,'D', 'mdy');">Дата Рождения</a></th>
+					<th>Телефон</th>
+					<th>Аватар</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+	<ul class="pagination" id="listButton">
+		<!--<li class="active"><a href="#">2</a></li>-->
+	</ul>
+	<!--<textarea id='result'></textarea>-->
+	
+</body>
+<script type='text/javascript'>
+	
+	window.onload = function() {
+		SendAjax( viewPeople );
+	}
+
+	function addRows(param1){
+		var tr = document.createElement('tr');
+		var td = 0;
+
+		for (var i = 0; i < 7; i++) {
+			td = tr.appendChild(document.createElement('td'));
+			td.innerHTML = param1[i];
+		}
+		document.getElementsByTagName("tbody")[0].appendChild(tr);
+
+	}
+
+	function addButton(){
+
+		var count = document.getElementById("list").getElementsByTagName("tr").length;;
+
+		var countButtons = count/20;
+
+		if (count % 20 != 0) {
+			countButtons += 1;
+		}
+
+		for (var i = 0; i < countButtons; i++) {
+			var li = document.createElement('li');
+			var a = document.createElement('a');
+			var list = document.getElementById("listButton");
+			
+			a.textContent = i + 1;
+			a.setAttribute('href', "#");
+			li.appendChild(a);
+			list.appendChild(li);
+
+		}
 		
-		window.onload = function(){
+		
+	}
 
-			var peoples = [];
-			
-			var human1 = {
-				firstName : "Dmitry",
-				lastName : "Ber",
-				age : 20
-			};
-			
-			var human2 = {
-				firstName : "Oleg",
-				lastName : "Dubrovin",
-				age: 25
+	function SendAjax(callBack){
+		var ajax = new XMLHttpRequest();
+		ajax.open("GET", "http://109.202.0.226/adapter-web/rest/dictionary/2d3dbf22-f333-43f3-9ae0-56a4728f8aaf", true);
+
+		ajax.send();
+
+		ajax.onload = function(){
+			if ( callBack ) {
+				callBack( ajax.responseText );
 			}
-			
-			peoples.push(human1);
-			peoples.push(human2);
-			
+		}
 
-			peoples.forEach(function(item, i, arr) {
-  			var human = item.firstName + " " + item.lastName + ". " + item.age + " year is old";
-  			addChild(human);
-  			
+	}
+
+	function viewPeople(peoples){
+
+		if(typeof(peoples) == 'string'){
+			peoples = JSON.parse(peoples);
+
+			peoples.documents.forEach(function(item) {
+				var lastName = item.lastName;
+				var avatar = "<img src=" + item.avatar + "/>"
+				var firstName = item.firstName;
+				var birthDate = item.birthDate;
+				var gender = item.gender;
+				var patronymic = item.patronymic;
+				var phone = item.phone;
+
+				
+				var people = [];
+				people.push(lastName);
+				people.push(firstName);
+				people.push(patronymic);
+				
+				people.push(gender);
+				people.push(birthDate);
+				people.push(phone);
+				people.push(avatar);
+
+				addRows(people);
+
 			}); 
 
-			/*
-			Dmitry Ber. 20 year is old
-			Oleg Dubrovin. 25 year is old
-			*/
+			addButton();
 
 		}
 
-		function addChild(param1){
-			var newList = document.createElement('li');
-  			newList.innerHTML = param1;
-  			list.appendChild(newList);
+	}
+
+	function findByName() {
+		var input, filter, table, tr, td, i;
+		input = document.getElementById("Input");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("list");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}       
 		}
-	</script>
+	}
+
+
+</script>
 </html>
+
+переключение по страницам
+сортировка по дате
